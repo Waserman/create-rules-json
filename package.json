@@ -1,0 +1,31 @@
+{
+  "name": "@waserman/create-rules-json",
+  "version": "1.0.0",
+  "description": "Simple CLI tool for writing formatted JSON file to disc",
+  "bin": {
+    "@waserman/create-rules-json": "bin/create-rules-json",
+    "create-rules-json": "bin/create-rules-json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Waserman/create-rules-json.git"
+  },
+  "keywords": [
+    "CLI",
+    "Node",
+    "create-rules-json",
+    "JSON"
+  ],
+  "author": "Avi Waserman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Waserman/create-rules-json/issues"
+  },
+  "homepage": "https://github.com/Waserman/create-rules-json#readme",
+  "dependencies": {
+    "arg": "^4.1.3",
+    "downloads-folder": "^3.0.0",
+    "esm": "^3.2.25",
+    "inquirer": "^7.3.3"
+  }
+}
