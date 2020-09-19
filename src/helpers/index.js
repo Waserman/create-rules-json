@@ -96,7 +96,6 @@ export function extractEntries(contentObject) {
 }
 
 export function builNewObjectStructure(entries = []) {
-  console.log(entries)
   try {
     return entries.reduce((content, rule) => {
       return {
@@ -117,7 +116,6 @@ export function builNewObjectStructure(entries = []) {
 
 export async function writeFileToDisc(filename, fileContent) {
   try {
-    console.log(JSON.stringify(fileContent));
     const downloadsDir = downloadsFolder();
     const filepath = `${downloadsDir}/${filename.endsWith('.json') ? filename : `${filename}.json`}`;
     await write(filepath, JSON.stringify(fileContent), 'utf8');
