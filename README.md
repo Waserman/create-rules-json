@@ -17,7 +17,7 @@ node --version
 Use the package manager [npm](https://www.npmjs.com/) to install the package.
 
 ```bash
-npm install -g create-rules-json
+npm install -g @waserman/create-rules-json
 ```
 
 ## CLI options
