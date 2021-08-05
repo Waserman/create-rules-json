@@ -13,7 +13,9 @@ export function parseArgumentsIntoOptions(rawArgs) {
  const args = arg(
    {
      '--source': String,
+     '--source-type': String,
      '--target': String,
+     '--target-type': String,
      '--replace': Boolean,
      '-s': '--source',
      '-t': '--target',
@@ -25,7 +27,9 @@ export function parseArgumentsIntoOptions(rawArgs) {
  );
  return {
    source: args['--source'] || null,
+   sourceType: args['--source-type'] || 'csv',
    target: args['--target'] || null,
+   targetType: args['--target-type'] || 'json',
    replace: args['--replace'] || false,
  };
 }
@@ -41,13 +45,22 @@ function validateUserInput (input) {
     });
 };
 
-export async function promptForMissingOptions(options) { 
+export async function promptForMissingOptions(options) {
   const questions = [];
   if (!options.source) {
     questions.push({
       type: 'input',
       name: 'source',
       message: 'Please insert a path (relative / absolute) to the source json file (do not forget the .json extenstion) \n (i.e /Users/myname/Desktop/my_file.json) \n',
+      validate: validateUserInput,
+    });
+  }
+
+  if (!options.sourceType) {
+    questions.push({
+      type: 'input',
+      name: 'sourceType',
+      message: 'Please select type type of the source file (json/csv)',
       validate: validateUserInput,
     });
   }
@@ -59,7 +72,7 @@ export async function promptForMissingOptions(options) {
       message: 'Please insert a name for the generated file. Don\'t include file extension. (default is "rules-json.json") \n',
     });
   }
- 
+
   if (!options.replace) {
     questions.push({
       type: 'confirm',
@@ -68,20 +81,20 @@ export async function promptForMissingOptions(options) {
       default: false,
     });
   }
- 
+
   const answers = await inquirer.prompt(questions);
   return {
     sourceFilePath: options.source || answers.source,
+    sourceType: options.sourceType || answers.sourceType,
     targetFile: options.target || answers.target,
     deleteSourceFile: options.replace || answers.replace,
   };
 }
 
 
-export async function readAndGetContent(filepath) {
+export async function readAndGetContent(filepath, reader) {
   try {
-    const contents = await read(filepath, 'utf8');
-    return JSON.parse(contents);
+    return reader.readContent(filepath);
   } catch (ex) {
     throw new Error('Could not read the source file.')
   }
